@@ -22,8 +22,8 @@
  * Define Global Variables
  * 
 */
-
-
+let sections = document.querySelectorAll("section");
+let ul = document.querySelector("#navbar__list");
 /**
  * End Global Variables
  * Start Helper Functions
@@ -37,10 +37,20 @@
  * Begin Main Functions
  * 
 */
+function buildingNavFunction() {
+
 
 // build the nav
-
-
+    const myFragment = document.createDocumentFragment();
+    for (let i = 0; i < sections.length; i++) {
+        const listItem = document.createElement('li');
+        const navLink = document.createElement('a');
+        navLink.innerHTML = `Section ${i+1}`;
+        listItem.appendChild(navLink);
+        myFragment.appendChild(listItem);
+    }
+    ul.appendChild(myFragment);
+}
 // Add class 'active' to section when near top of viewport
 
 
@@ -54,9 +64,12 @@
 */
 
 // Build menu 
-
+document.addEventListener("DOMContentLoaded", (event) => {
+    buildingNavFunction();
+  });
 // Scroll to section on link click
 
 // Set sections as active
 
 
+// mainFunction();

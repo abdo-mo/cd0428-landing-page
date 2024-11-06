@@ -1,24 +1,4 @@
 /**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
-/**
  * Define Global Variables
  * 
 */
@@ -29,34 +9,62 @@ let ul = document.querySelector("#navbar__list");
  * Start Helper Functions
  * 
 */
-
-
-
+const convertToArray = (nodeList) => {
+    const convertedArray = [...nodeList];
+    return convertedArray
+}
 /**
  * End Helper Functions
  * Begin Main Functions
  * 
 */
-function buildingNavFunction() {
-
-
+const buildingNavFunction = () => {
 // build the nav
     const myFragment = document.createDocumentFragment();
     for (let i = 0; i < sections.length; i++) {
+        let sec = `section${i+1}`;
         const listItem = document.createElement('li');
+        listItem.setAttribute("to", sec)
         const navLink = document.createElement('a');
         navLink.innerHTML = `Section ${i+1}`;
+        navLink.setAttribute("href", "#")
         listItem.appendChild(navLink);
         myFragment.appendChild(listItem);
     }
     ul.appendChild(myFragment);
 }
 // Add class 'active' to section when near top of viewport
-
-
+const makeActive = () => {
+    const sectionsArray = convertToArray(sections);
+    let navIndex = 0;
+    for (const section of sectionsArray) {
+        const box = section.getBoundingClientRect();
+        navItem = document.querySelectorAll('li');
+        if (box.top <= 150 && box.bottom >= 150) {
+            section.classList.add("active")
+            navItem[navIndex].classList.add("active")
+        } else {
+            section.classList.remove("active");
+            navItem[navIndex].classList.remove("active")
+            
+        }
+        navIndex += 1;
+    }
+}
 // Scroll to anchor ID using scrollTO event
-
-
+const scrolling = () => {
+    target = event.target.parentElement;
+    let id = target.getAttribute("to");
+    const element = document.getElementById(id);
+    if (element) {
+        let y = element.getBoundingClientRect().top + window.scrollY;        
+        window.scrollTo({
+            top: y,
+            left: 0,
+            behavior: "smooth",
+        });
+    }      
+}
 /**
  * End Main Functions
  * Begin Events
@@ -68,8 +76,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     buildingNavFunction();
   });
 // Scroll to section on link click
-
+ul.addEventListener("click", (event) => {
+    event.preventDefault()
+    scrolling();
+});
 // Set sections as active
-
-
-// mainFunction();
+document.addEventListener("scroll", makeActive);

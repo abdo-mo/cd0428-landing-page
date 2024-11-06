@@ -5,7 +5,7 @@ A simple landing page project
 
 ## Demo
 
-    ![project demo](/demo/demo.png)
+    ![alt text](https://github.com/abdo-mo/cd0428-landing-page/blog/main/demo/demo.png?raw=true)
 
 # Table of Contents
 
